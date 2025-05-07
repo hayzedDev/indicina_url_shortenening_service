@@ -111,8 +111,10 @@ const ListingPage: React.FC = () => {
           </TableHead>
           <TableBody>
             {filteredUrls.map((url) => (
-              <TableRow key={url.shortUrl}>
-                <TableCell>{url.shortUrl}</TableCell>
+              <TableRow
+                key={`${process.env.REACT_APP_BACKEND_URL}/${url.shortUrl}`}
+              >
+                <TableCell>{`${process.env.REACT_APP_BACKEND_URL}/${url.shortUrl}`}</TableCell>
                 <TableCell>{url.longUrl}</TableCell>
                 <TableCell>
                   {new Date(url.createdAt).toLocaleString()}

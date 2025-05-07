@@ -35,7 +35,9 @@ const HomePage: React.FC = () => {
           `${process.env.REACT_APP_BACKEND_URL}/api/encode`,
           { longUrl: url }
         );
-        setShortUrl(`${process.env.REACT_APP_FRONTEND_URL}/response.data.data`); // Display the returned short URL
+        setShortUrl(
+          `${process.env.REACT_APP_FRONTEND_URL}/${response.data.data}`
+        ); // Display the returned short URL
         setUrl(''); // Clear the input field
       } catch (error: any) {
         console.error('Error shortening URL:', error);
@@ -97,37 +99,6 @@ const HomePage: React.FC = () => {
               }
             />
             {
-              // <Button
-              //   type="submit"
-              //   variant="contained"
-              //   color="primary"
-              //   fullWidth
-              //   disabled={!isValidUrl(url) || loading} // Disable button if URL is invalid or loading
-              //   sx={{
-              //     padding: 1.5,
-              //     fontSize: '1rem',
-              //     textTransform: 'none',
-              //     display: 'flex',
-              //     alignItems: 'center',
-              //     justifyContent: 'center',
-              //     backgroundColor: !isValidUrl(url) ? '#001933' : '#007bff', // Light red when disabled, vibrant blue when enabled
-              //     color: !isValidUrl(url) ? '#ffffff' : '#ffffff', // Dark red text when disabled, white text when enabled
-              //     '&:hover': {
-              //       backgroundColor: !isValidUrl(url) ? '#001933' : '#0056b3', // No hover effect for disabled state
-              //     },
-              //     cursor: !isValidUrl(url) ? 'not-allowed' : 'pointer', // Show "not-allowed" cursor when disabled
-              //   }}
-              // >
-              //   {loading ? (
-              //     <CircularProgress size={24} color="inherit" />
-              //   ) : (
-              //     <>
-              //       <LinkIcon sx={{ marginRight: 1 }} />
-              //       Get your link for free
-              //     </>
-              //   )}
-              // </Button>
-
               <Button
                 type="submit"
                 variant="contained"
@@ -148,7 +119,6 @@ const HomePage: React.FC = () => {
                       ? '#d9534f'
                       : '#007bff', // Orange when app loads, red when invalid, blue when valid
                   color: 'ffffff', // White text for all states
-                  // color: url === '' || !isValidUrl(url) ? '#ffffff' : '#ffffff', // White text for all states
                   '&:hover': {
                     backgroundColor:
                       url === ''
