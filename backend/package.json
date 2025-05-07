@@ -4,10 +4,10 @@
   "description": "Backend service for URL shortening application",
   "main": "src/app.ts",
   "scripts": {
-    "start": "ts-node src/app.ts",
+    "dev": "ts-node src/app.ts",
     "build": "tsc",
     "test": "jest",
-    "dev": "ts-node-dev src/app.ts"
+    "start": "node dist/app.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
