@@ -1,10 +1,40 @@
-# URL Shortening Service
+# URL Shortening Service - Backend
 
-This project is a URL shortening service built with TypeScript, utilizing Express for the backend and React for the frontend. 
+This is the backend service for the URL Shortening application. It is built with TypeScript and Express and handles URL encoding, decoding, and statistics retrieval.
 
-## Backend
+---
 
-The backend is responsible for handling URL encoding, decoding, and statistics retrieval. It is structured as follows:
+## Prerequisites
+
+Ensure you have **Node.js v20.10.0** installed on your system. If not, follow these steps to install it:
+
+1. **Check Node.js Version**:
+   Run the following command to check your current Node.js version:
+
+   ```bash
+   node -v
+   ```
+
+2. **Install Node.js v20.10.0**:
+
+   - Visit the [Node.js official website](https://nodejs.org/) and download the **v20.10.0** installer for your operating system.
+   - Alternatively, use a version manager like `nvm` (Node Version Manager) to install it:
+     ```bash
+     nvm install 20.10.0
+     nvm use 20.10.0
+     ```
+
+3. **Verify Installation**:
+   After installation, verify the version:
+   ```bash
+   node -v
+   ```
+
+---
+
+## Project Structure
+
+The backend is structured as follows:
 
 - **Entry Point**: `src/app.ts` initializes the Express application, sets up middleware, and configures routes.
 - **Controllers**: `src/controllers/urlController.ts` contains the `UrlController` class, which handles incoming requests related to URL operations.
@@ -12,64 +42,199 @@ The backend is responsible for handling URL encoding, decoding, and statistics r
 - **Services**: `src/services/urlService.ts` contains the business logic for managing URLs.
 - **Utilities**: `src/utils/encoder.ts` provides utility functions for URL encoding and decoding.
 - **Types**: `src/types/index.ts` defines the data structures used throughout the application.
+- **Models**: `src/models/urlModel.ts` defines the Mongoose schema and model for storing URL data in MongoDB.
 
-### Installation
+---
 
-1. Navigate to the backend directory:
+## Installation
+
+1. **Clone the Repository**:
+
+   ```bash
+   git clone <repository-url>
+   cd url-shortening-service
    ```
+
+2. **Navigate to the Backend Directory**:
+
+   ```bash
    cd backend
    ```
 
-2. Install dependencies:
-   ```
+3. **Install Dependencies**:
+
+   ```bash
    npm install
    ```
 
-### Running the Backend
+4. **Set Up Environment Variables**:
+   - Create a `.env` file by copying the `.env.example` file:
+     ```bash
+     cp .env.example .env
+     ```
+   - Update the `.env` file with the appropriate values for your environment (e.g., MongoDB connection string, port, etc.).
 
-To start the backend server, run:
-```
-npm start
-```
+---
 
-## Frontend
+## Running the Backend
 
-The frontend provides a user interface for interacting with the URL shortening service. It is structured as follows:
+### Development Mode
 
-- **Components**: 
-  - `src/components/UrlForm.tsx` for submitting long URLs.
-  - `src/components/UrlList.tsx` for displaying shortened URLs.
-  - `src/components/UrlStatistics.tsx` for showing statistics of shortened URLs.
-  
-- **Pages**: 
-  - `src/pages/HomePage.tsx` serves as the main landing page.
-  - `src/pages/StatsPage.tsx` displays statistics for specific URLs.
+To run the backend in development mode with live reloading:
 
-- **Main Application**: `src/App.tsx` sets up routing and renders the appropriate components.
-
-### Installation
-
-1. Navigate to the frontend directory:
-   ```
-   cd frontend
-   ```
-
-2. Install dependencies:
-   ```
-   npm install
-   ```
-
-### Running the Frontend
-
-To start the frontend application, run:
-```
-npm start
+```bash
+npm run dev
 ```
 
-## Contributing
+### Production Mode
 
-Contributions are welcome! Please feel free to submit a pull request or open an issue for any enhancements or bug fixes.
+To build and run the backend in production mode:
 
-## License
+1. Build the project:
+   ```bash
+   npm run build
+   ```
+2. Start the server:
+   ```bash
+   npm run start
+   ```
 
-This project is licensed under the MIT License.
+The backend will run on `http://localhost:<PORT>` (default: `5100`).
+
+---
+
+## API Endpoints
+
+### 1. **Encode URL**
+
+**Endpoint**: `POST /api/encode`
+**Description**: Encodes a long URL into a short URL.
+
+#### Request:
+
+```json
+{
+  "longUrl": "https://example.com"
+}
+```
+
+#### Response:
+
+```json
+{
+  "success": true,
+  "message": "URL encoded successfully",
+  "data": "abc123"
+}
+```
+
+---
+
+### 2. **Decode URL**
+
+**Endpoint**: `GET /api/decode/:urlPath`
+**Description**: Decodes a short URL back into the original long URL.
+
+#### Request:
+
+- **Path Parameter**: `urlPath` (e.g., `abc123`)
+
+#### Response:
+
+```json
+{
+  "success": true,
+  "message": "URL decoded successfully",
+  "data": "https://example.com"
+}
+```
+
+#### Error Response (if the short URL does not exist):
+
+```json
+{
+  "success": false,
+  "message": "URL not found"
+}
+```
+
+---
+
+### 3. **Get URL Statistics**
+
+**Endpoint**: `GET /api/statistics/:shortUrl`
+**Description**: Retrieves statistics for a given short URL.
+
+#### Request:
+
+- **Path Parameter**: `shortUrl` (e.g., `abc123`)
+
+#### Response:
+
+```json
+{
+  "success": true,
+  "message": "URL statistics retrieved successfully",
+  "data": {
+    "longUrl": "https://example.com",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "visits": 10,
+    "lastAccessed": "2023-01-02T00:00:00Z",
+    "referrers": [{ "domain": "google.com", "count": 5 }],
+    "geoDistribution": [{ "country": "United States", "count": 7 }]
+  }
+}
+```
+
+#### Error Response (if the short URL does not exist):
+
+```json
+{
+  "success": false,
+  "message": "URL statistics not found"
+}
+```
+
+---
+
+### 4. **List All URLs**
+
+**Endpoint**: `GET /api/list`
+**Description**: Retrieves a list of all stored URLs.
+
+#### Response:
+
+```json
+{
+  "success": true,
+  "message": "URLs retrieved successfully",
+  "data": [
+    {
+      "shortUrl": "abc123",
+      "longUrl": "https://example1.com",
+      "createdAt": "2023-01-01T00:00:00Z",
+      "visits": 10,
+      "lastAccessed": "2023-01-02T00:00:00Z"
+    },
+    {
+      "shortUrl": "xyz456",
+      "longUrl": "https://example2.com",
+      "createdAt": "2023-01-03T00:00:00Z",
+      "visits": 5,
+      "lastAccessed": "2023-01-04T00:00:00Z"
+    }
+  ]
+}
+```
+
+---
+
+## Testing
+
+To run the backend tests:
+
+```bash
+npm run test
+```
+
+---

@@ -69,6 +69,7 @@ To get started with the project, follow these steps:
 
    ```bash
    git clone <repository-url>
+   cd url-shortening-service
    ```
 
 2. Navigate to the backend directory and install dependencies:
@@ -78,26 +79,90 @@ To get started with the project, follow these steps:
    npm install
    ```
 
-3. Navigate to the frontend directory and install dependencies:
+3. Create a `.env` file in the backend directory by copying the `.env.example` file:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+4. Update the `.env` file with the appropriate values for your environment.
+
+5. Navigate to the frontend directory and install dependencies:
 
    ```bash
    cd ../frontend
    npm install
    ```
 
-4. Start the backend server:
+6. Create a `.env` file in the frontend directory by copying the `.env.example` file:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+7. Update the `.env` file with the appropriate values for your environment.
+
+8. Start the backend server:
 
    ```bash
    cd ../backend
-   npm run start
+   npm run dev
    ```
 
-5. Start the frontend application:
+9. Start the frontend application:
 
    ```bash
    cd ../frontend
    npm run start
    ```
+
+## Running in Production
+
+To run the application in production mode, follow these steps:
+
+### Backend
+
+1. Navigate to the backend directory:
+
+   ```bash
+   cd backend
+   ```
+
+2. Build the backend:
+
+   ```bash
+   npm run build
+   ```
+
+3. Start the backend server:
+   ```bash
+   npm run start
+   ```
+
+The backend will now run on `http://localhost:5100` (or the port specified in your `.env` file).
+
+### Frontend
+
+1. Navigate to the frontend directory:
+
+   ```bash
+   cd frontend
+   ```
+
+2. Build the frontend:
+
+   ```bash
+   npm run build
+   ```
+
+3. Serve the frontend build:
+   ```bash
+   npm run serve
+   ```
+
+The frontend will now run on `http://localhost:3001` (or the port specified in your `.env` file).
+
+---
 
 ## Running Test Cases
 
@@ -115,6 +180,20 @@ To ensure the application is working as expected, you can run the test cases for
 
    ```bash
    npm test
+   ```
+
+### Frontend Tests
+
+1. Navigate to the frontend directory:
+
+   ```bash
+   cd ../frontend
+   ```
+
+2. Run the tests:
+
+   ```bash
+   npm run test
    ```
 
 ## Usage
