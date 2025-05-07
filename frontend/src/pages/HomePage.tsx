@@ -64,7 +64,7 @@ const HomePage: React.FC = () => {
     >
       <Container maxWidth="sm">
         <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
-          Build Stronger Digital Connections
+          URL Shortening Service
         </Typography>
         <Typography variant="body1" gutterBottom sx={{ opacity: 0.8 }}>
           Use our URL shortener to create short, memorable links that connect
